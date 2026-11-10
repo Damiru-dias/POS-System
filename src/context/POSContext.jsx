@@ -39,6 +39,19 @@ export function POSProvider({ children }) {
   const [activeView, setActiveView] = useState('register'); // 'register' | 'orders' | 'inventory' | 'advances' | 'customers' | 'analytics'
   const [receiptOrder, setReceiptOrder] = useState(null); // When set, opens receipt modal
 
+  // Theme (Dark / Light mode)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('apex_pos_lkr_theme');
+    return saved ? saved === 'dark' : false;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    localStorage.setItem('apex_pos_lkr_theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
+
   const [currentShift, setCurrentShift] = useState(() => {
     const saved = localStorage.getItem('apex_pos_lkr_shift');
     return saved
@@ -427,6 +440,8 @@ export function POSProvider({ children }) {
         openNewShift,
         receiptOrder,
         setReceiptOrder,
+        isDarkMode,
+        toggleDarkMode,
         addToCart,
         removeFromCart,
         updateCartQty,

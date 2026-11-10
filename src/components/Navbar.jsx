@@ -11,6 +11,8 @@ import {
   UserCheck,
   Clock,
   Sparkles,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 export function Navbar({ onOpenShiftModal }) {
@@ -22,6 +24,8 @@ export function Navbar({ onOpenShiftModal }) {
     cart,
     storeSettings,
     formatCurrency,
+    isDarkMode,
+    toggleDarkMode,
   } = usePOS();
 
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
@@ -98,6 +102,16 @@ export function Navbar({ onOpenShiftModal }) {
           <span>{activeStaff.name}</span>
           <span className="role-tag">{activeStaff.role}</span>
         </div>
+
+        {/* Dark / Light Mode Toggle */}
+        <button
+          onClick={toggleDarkMode}
+          className="theme-toggle-btn"
+          title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          aria-label="Toggle dark mode"
+        >
+          {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
 
         {/* Live Clock */}
         <div className="time-pill">
